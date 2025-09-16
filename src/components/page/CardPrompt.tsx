@@ -1,13 +1,11 @@
-import { Card, CardHeader, CardTitle } from "../ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
 } from "../ui/collapsible";
 import { Button } from "../ui/button";
-import {
-  ChevronDown,
-} from "lucide-react";
+import { ChevronDown } from "lucide-react";
 import type { ReactNode } from "react";
 
 function CardPrompts({
@@ -34,7 +32,7 @@ function CardPrompts({
             </div>
           </CardHeader>
           <CollapsibleContent>
-            {children}
+            <CardContent className="space-y-4">{children}</CardContent>
           </CollapsibleContent>
         </Card>
       </Collapsible>

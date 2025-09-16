@@ -1,10 +1,128 @@
-import { ArrowDownToLine } from "lucide-react";
+import { ArrowDownToLine, Plus } from "lucide-react";
 import { Button } from "../ui/button";
-import { CardContent } from "../ui/card";
 import CustomTextAreaWithText from "../ui/customtextareawtext";
 import CardPrompt from "./CardPrompt";
+import { useState } from "react";
 
 function EditForm() {
+  const [editingEducationForm, setEditingEducationForm] = useState(false);
+  const [editingExpForm, setEditingExpForm] = useState(false);
+
+  const personalDetails = ["Name", "Email", "Phone Number", "Address"];
+  const educationDetails = [
+    "School",
+    "Degree",
+    "Start Date",
+    "End Date",
+    "Location",
+  ];
+  const experienceDetails = [
+    " Company Name",
+    "Position Title",
+    "Start Date",
+    "End Date",
+    "Location",
+    "Description",
+  ];
+
+  const addPersonalDetails = () => {
+    return (
+      <>
+        {personalDetails.map((personalDetail) => (
+          <CustomTextAreaWithText
+            key={personalDetail}
+            task={personalDetail}
+            placeholderTask={`Enter ${personalDetail}`}
+          />
+        ))}
+        <Button className="w-full">
+          <ArrowDownToLine />
+          Save
+        </Button>
+      </>
+    );
+  };
+
+  const onAddEducation = () => {
+    //School, Degree, Start Date, End Date, Location
+    setEditingEducationForm(true);
+  };
+
+  const addEducation = () => {
+    return editingEducationForm ? (
+      <>
+        {educationDetails.map((educationDetail) => (
+          <CustomTextAreaWithText
+            key={educationDetail}
+            task={educationDetail}
+            placeholderTask={`Enter ${educationDetail}`}
+          />
+        ))}
+        <div className="flex justify-end gap-0.5">
+          <Button
+            className="bg-white border text-black shadow-2xs"
+            onClick={() => {
+              setEditingEducationForm(false);
+            }}
+          >
+            Cancel
+          </Button>
+          <Button>
+            <ArrowDownToLine />
+            Save
+          </Button>
+        </div>
+      </>
+    ) : (
+      <Button className="w-full" onClick={onAddEducation}>
+        <Plus />
+        Education
+      </Button>
+    );
+  };
+
+  const onSaveEducation = () => {};
+
+  const onAddExperience = () => {
+    // Company Name, Position Title, Start Date, End Date, Location, Description
+    setEditingExpForm(true);
+  };
+
+  const addExperience = () => {
+    return editingExpForm ? (
+      <>
+        {experienceDetails.map((experienceDetail) => (
+          <CustomTextAreaWithText
+            key={experienceDetail}
+            task={experienceDetail}
+            placeholderTask={`Enter ${experienceDetail}`}
+          />
+        ))}
+        <div className="flex justify-end gap-0.5">
+          <Button
+            className="bg-white border text-black shadow-2xs"
+            onClick={() => {
+              setEditingExpForm(false);
+            }}
+          >
+            Cancel
+          </Button>
+          <Button>
+            <ArrowDownToLine />
+            Save
+          </Button>
+        </div>
+      </>
+    ) : (
+      <Button className="w-full" onClick={onAddExperience}>
+        <Plus />
+        Experience
+      </Button>
+    );
+  };
+
+  const onSaveExperience = () => {};
+
   return (
     <div className="space-y-4">
       <div className="text-left">
@@ -14,29 +132,14 @@ function EditForm() {
         </p>
       </div>
       <CardPrompt cardTitle="Personal Details">
-        <CardContent className="space-y-4">
-          <CustomTextAreaWithText
-            task="Name"
-            placeholderTask="e.g., John A. Doe"
-          />
-          <CustomTextAreaWithText
-            task="Email"
-            placeholderTask="e.g., john.doe@email.com"
-          />
-          <CustomTextAreaWithText
-            task="Phone Number"
-            placeholderTask="e.g., john.doe@email.com"
-          />
-          <CustomTextAreaWithText
-            task="Address"
-            placeholderTask="e.g., 123 Main Street, City, Country"
-          />
-          <Button className="w-full">
-            <ArrowDownToLine />
-            Save
-          </Button>
-        </CardContent>
+        {addPersonalDetails()}
       </CardPrompt>
+      <CardPrompt cardTitle="Education">
+        {addEducation()}
+        </CardPrompt>
+      <CardPrompt cardTitle="Experience">
+        {addExperience()}
+        </CardPrompt>
     </div>
   );
 }
